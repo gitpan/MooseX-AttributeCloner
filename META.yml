@@ -1,6 +1,6 @@
 ---
 name: MooseX-AttributeCloner
-version: 0.12
+version: 0.13
 author:
   - 'Andy Brown <setitesuk@gmail.com>'
 abstract: Role to clone attribute values from one class into another
@@ -13,17 +13,19 @@ requires:
   JSON: 0
   Moose: 0
   Moose::Role: 0
+  MooseX::InsideOut: 0
   Readonly: 1.03
   Test::Exception: 0
   Test::More: 0.74
 build_requires:
   JSON: 0
+  MooseX::InsideOut: 0
   Test::Exception: 0
   Test::More: 0.8
 provides:
   MooseX::AttributeCloner:
     file: lib/MooseX/AttributeCloner.pm
-    version: 0.12
+    version: 0.13
 generated_by: Module::Build version 0.31
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.2.html
