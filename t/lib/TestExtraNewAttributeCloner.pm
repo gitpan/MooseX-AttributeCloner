@@ -1,27 +1,25 @@
 #############
 # Created By: setitesuk
-# Created On: 2009-11-06
+# Created On: 2010-02-15
 
-package TestAttributeCloner;
+package TestExtraNewAttributeCloner;
 use Moose;
 use MooseX::InsideOut;
 use Carp;
 use English qw{-no_match_vars};
+use TestNewAttributeCloner;
 
-with qw{MooseX::Getopt MooseX::AttributeCloner};
+extends qw{TestAttributeCloner};
 
-has q{attr1} => (isa => q{Str}, is => q{ro}, predicate => q{has_attr1});
-has q{attr2} => (isa => q{Str}, is => q{ro}, required => 1);
-has q{attr3} => (isa => q{Str}, is => q{ro});
-has q{attr4} => (isa => q{Str}, is => q{ro});
-has q{attr5} => (isa => q{Str}, is => q{ro});
-has q{attr6} => (isa => q{Str}, is => q{ro});
-has q{attr7} => (isa => q{Str}, is => q{ro});
+has q{attr8} => (isa => q{Str}, is => q{ro});
+has q{attr9} => (isa => q{Str}, is => q{ro});
+has q{attr10} => (isa => q{Str}, is => q{ro});
 
-has q{object_attr} => (isa => q{Object}, is => q{ro});
-has q{hash_attr} => (isa => q{HashRef}, is => q{ro});
-has q{array_attr} => (isa => q{ArrayRef}, is => q{ro});
-has q{Boolean} => (isa => q{Bool}, is => q{rw});
+sub test_package {
+  my ($self) = @_;
+  return TestNewAttributeCloner->new_with_cloned_attributes($self);
+}
+
 no Moose;
 __PACKAGE__->meta->make_immutable;
 1;
@@ -29,7 +27,7 @@ __END__
 
 =head1 NAME
 
-TestAttributeCloner
+TestExtraNewAttributeCloner
 
 =head1 VERSION
 

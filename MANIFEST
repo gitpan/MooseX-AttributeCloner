@@ -2,6 +2,7 @@ Build.PL
 Changes
 MANIFEST
 README
+t/perlcriticrc
 lib/MooseX/AttributeCloner.pm
 t/00-critic.t
 t/00-distribution.t
@@ -11,6 +12,6 @@ t/00-podcoverage.t
 t/10-AttributeCloner.t
 t/lib/TestAttributeCloner.pm
 t/lib/TestNewAttributeCloner.pm
-t/perlcriticrc
+t/lib/TestExtraNewAttributeCloner.pm
 Makefile.PL
 META.yml

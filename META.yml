@@ -8,7 +8,7 @@ build_requires:
   Test::Exception: 0
   Test::More: 0.8
 configure_requires:
-  Module::Build: 0.36
+  Module::Build: 0.3603
 generated_by: 'Module::Build version 0.3603'
 license: lgpl3
 meta-spec:
@@ -18,7 +18,7 @@ name: MooseX-AttributeCloner
 provides:
   MooseX::AttributeCloner:
     file: lib/MooseX/AttributeCloner.pm
-    version: 0.19
+    version: v0.19.5
 requires:
   Carp: 1.04
   English: 1.02
@@ -32,4 +32,4 @@ requires:
   Test::More: 0.74
 resources:
   license: http://opensource.org/licenses/lgpl-3.0.html
-version: 0.19
+version: 0.195
