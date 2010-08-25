@@ -1,7 +1,7 @@
 #############
 # Created By: setitesuk@gmail.com
 # Created On: 2009-11-03
-# Last Updated: 2010-02-18
+# Last Updated: 2009-11-09
 
 package MooseX::AttributeCloner;
 use Moose::Role;
@@ -11,7 +11,7 @@ use Readonly;
 
 use JSON;
 
-our $VERSION = 0.2;
+our $VERSION = 0.21;
 
 =head1 NAME
 
@@ -29,15 +29,6 @@ MooseX::AttributeCloner
 
   my $NewClassObject = $self->new_with_cloned_attributes(q{New::Class}, {});
   1;
-
-  package My::Class;
-  use Moose;
-
-  use Some::Other::Package; # which has also 'with'ed MooseX:AttributeCloner
- 
-  with qw{MooseX::AttributeCloner};
-
-  my $NewClassObject = Some::Other::Package->new_with_cloned_attributes($self, {});
 
 =head1 DESCRIPTION
 
@@ -63,40 +54,16 @@ This takes a package name as the first argument, plus an optional additional $ar
 return a class object of the package populated with any matching attribute data from the current object,
 plus anything in the $arg_refs hash.
 
-  package My::Class;
-  use Moose;
-  with qw{MooseX::AttributeCloner};
-
-  my $NewClassObject = $self->new_with_cloned_attributes(q{New::Class}, {});
-  1;
-
-As of 0.19, you can use a package, and then call as follows:
-
-  package My::Class;
-  use Moose;
-
-  use Some::Other::Package; # which has also 'with'ed MooseX:AttributeCloner
- 
-  with qw{MooseX::AttributeCloner};
-
-  my $NewClassObject = Some::Other::Package->new_with_cloned_attributes($self, {});
-
-This works just by switching around the package and $self internally, so both will need to utilise this role.
-(This is a low priority TODO - remove the need to have the this role on the calling class if the package has it)
-
 =cut
 
 sub new_with_cloned_attributes {
   my ($self, $package, $arg_refs) = @_;
   $arg_refs ||= {};
 
-  my $package_called; # prep for potentially being able to eliminate the calling class needing this role
-
   if (!ref$self && ref$package) {
     my $temp = $self;
     $self = $package;
     $package = $temp;
-    $package_called++;
   }
 
   eval {
@@ -109,9 +76,7 @@ sub new_with_cloned_attributes {
   } or do {
     confess $EVAL_ERROR;
   };
-
   $self->_hash_of_attribute_values($arg_refs);
-
   return $package->new($arg_refs);
 }
 
@@ -169,7 +134,8 @@ sub attributes_as_command_options {
 
   my @command_line_options;
 
-  foreach my $key (keys %{$attributes}) {
+  # version 0.21 - force this to be in a sorted order, so that results can be consistent should operating systems return keys in a different order
+  foreach my $key (sort keys %{$attributes}) {
 
     if (! ref $attributes->{$key}) {
       my $string = $self->_create_string($key, $attributes->{$key}, $arg_refs);
@@ -298,7 +264,7 @@ sub _hash_of_attribute_values {
       next if !$self->$pred();
     }
 
-    if (!exists$arg_refs->{$init_arg} && defined $self->$reader()) {
+    if ($init_arg && !exists$arg_refs->{$init_arg} && defined $self->$reader()) {
       $arg_refs->{$init_arg} = $attr->type_constraint() eq q{Bool} && $command_options ? q{} : $self->$reader();
     }
   }
@@ -365,11 +331,11 @@ sub _exclude_args {
     return 1;
   }
 
-  if (ref$excluded_attributes ne q{ARRAY}) {
+  if ( ! ref$excluded_attributes || ref$excluded_attributes ne q{ARRAY} ) {
     croak qq{Your excluded_attributes are not in an arrayref - $excluded_attributes};
   }
 
-  if (ref$included_argv_attributes ne q{ARRAY}) {
+  if ( ! ref$included_argv_attributes || ref$included_argv_attributes ne q{ARRAY} ) {
     croak qq{Your included_argv_attributes are not in an arrayref - $included_argv_attributes};
   }
 
@@ -398,16 +364,6 @@ __END__
 
 =head1 CONFIGURATION AND ENVIRONMENT
 
-This could fail to install if you do not have Module::Build 0.3603 available, since the passthrough style of it's
-production of Makefile.PL has been deprecated, so it now uses small. This means that you either need to have it
-installed, or be able to utilise 'configure_requires' (available in modern installations of CPAN.pm/CPANPLUS and
-perl 5.10.1)
-
-see http://search.cpan.org/~dagolden/Module-Build-0.3603/lib/Module/Build/Compat.pm for further details about this
-
-As far as I can tell, as long as you have any version of Module::Build, you should be OK, but if it is not, and
-you cannot utilise 'configure_requires', then this is likely to fail.
-
 =head1 DEPENDENCIES
 
 =over
@@ -421,8 +377,6 @@ you cannot utilise 'configure_requires', then this is likely to fail.
 =item Readonly
 
 =item JSON
-
-=item Module::Build 0.3603
 
 =back
 
