@@ -32,4 +32,4 @@ requires:
   Test::More: 0.74
 resources:
   license: http://opensource.org/licenses/lgpl-3.0.html
-version: 0.21
+version: 0.22
