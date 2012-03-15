@@ -1,0 +1,57 @@
+{
+   "abstract" : "Role to clone attribute values from one class into another",
+   "author" : [
+      "Andy Brown <setitesuk@gmail.com>"
+   ],
+   "dynamic_config" : 1,
+   "generated_by" : "Module::Build version 0.38, CPAN::Meta::Converter version 2.112621",
+   "license" : [
+      "open_source"
+   ],
+   "meta-spec" : {
+      "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
+      "version" : "2"
+   },
+   "name" : "MooseX-AttributeCloner",
+   "prereqs" : {
+      "build" : {
+         "requires" : {
+            "JSON" : 0,
+            "MooseX::InsideOut" : 0,
+            "Test::Exception" : 0,
+            "Test::More" : "0.8"
+         }
+      },
+      "configure" : {
+         "requires" : {
+            "Module::Build" : "0.3603"
+         }
+      },
+      "runtime" : {
+         "requires" : {
+            "Carp" : "1.04",
+            "English" : "1.02",
+            "JSON" : 0,
+            "Moose" : 0,
+            "Moose::Role" : 0,
+            "MooseX::Getopt" : 0,
+            "Readonly" : "1.03",
+            "Test::Exception" : 0,
+            "Test::More" : "0.74"
+         }
+      }
+   },
+   "provides" : {
+      "MooseX::AttributeCloner" : {
+         "file" : "lib/MooseX/AttributeCloner.pm",
+         "version" : "0.25"
+      }
+   },
+   "release_status" : "stable",
+   "resources" : {
+      "license" : [
+         "http://www.gnu.org/licenses/lgpl-3.0.txt"
+      ]
+   },
+   "version" : "0.25"
+}
