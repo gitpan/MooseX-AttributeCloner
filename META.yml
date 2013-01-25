@@ -18,7 +18,7 @@ name: MooseX-AttributeCloner
 provides:
   MooseX::AttributeCloner:
     file: lib/MooseX/AttributeCloner.pm
-    version: 0.26
+    version: 0.27
 requires:
   Carp: 1.04
   English: 1.02
@@ -31,4 +31,4 @@ requires:
   Test::More: 0.74
 resources:
   license: http://www.gnu.org/licenses/lgpl-3.0.txt
-version: 0.26
+version: 0.27
