@@ -15,4 +15,3 @@ t/lib/TestExtraNewAttributeCloner.pm
 t/perlcriticrc
 Makefile.PL
 META.yml
-META.json
